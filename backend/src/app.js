@@ -1,175 +1,104 @@
-const express = require('express');
-const cors = require('cors');
-const app = express();
+const express = require("express")
+const admin = require("firebase-admin")
+const cors = require("cors")
+const path = require("path");
+const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
-const { db, auth } = require('./config/firebase');
-const Usuario = require('./models/Usuario'); 
+const app = express()
 
-const clienteService = require('./services/ClienteService');
-const funcionarioService = require('./services/FuncionarioService');
-const gerenteService = require('./services/GerenteService');
-const produtoService = require('./services/ProdutoService');
-const pedidoService = require('./services/PedidoService');
-const authMiddleware = require('./middlewares/authMiddleware');
+app.use(cors());
+app.use(express.json())
+app.use(express.static(path.join(__dirname, "../../frontend")));
 
-// Middleware para JSON
-app.use(express.json());
+const serviceAccount = require("./firebaseKey.json")
 
-// Configuração do CORS
-app.use(cors({
-  origin: ['http://localhost:5500', 'null', 'http://127.0.0.1:5500'],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  optionsSuccessStatus: 200
-}));
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+})
 
-// Rotas de Usuário (Públicas) - Agora usando diretamente os métodos da classe Usuario
-app.post('/usuarios', async (req, res) => {
-    try {
-        const { nome, email, senha } = req.body;
-        const novoUsuario = await Usuario.criar(nome, email, senha); 
-        res.status(201).send(novoUsuario);
-    } catch (error) {
-        res.status(400).send({ message: error.message });
-    }
+const db = admin.firestore()
+const usuariosCollection = db.collection("usuarios")
+
+// log routes
+app.use((req, res, next) => {
+    console.log(`Received ${req.method} request for ${req.url}`);
+    next();
 });
 
-app.post('/login', async (req, res) => {
-    try {
-        const { email, senha } = req.body;
-        const { token, usuario } = await Usuario.login(email, senha);
-        res.status(200).send({ token, usuario });
-    } catch (error) {
-        res.status(401).send({ message: error.message });
-    }
-});
+// cadastro
+app.post("/usuarios", async (req, res) => {
+    const { nome, email, senha } = req.body
 
-// Rotas Protegidas (Exigem Autenticação)
-app.get('/me', authMiddleware, async (req, res) => {
     try {
-        res.status(200).send({ id: req.usuario.id, email: req.usuario.email, tipo: req.usuario.tipo });
-    } catch (error) {
-        res.status(500).send({ message: 'Erro ao obter dados do usuário autenticado.' });
-    }
-});
-
-// Rotas de Cliente
-app.post('/clientes', authMiddleware, async (req, res) => {
-    try {
-        const { nome, email, telefone } = req.body;
-        const novoCliente = await clienteService.criarCliente(nome, email, telefone);
-        res.status(201).send(novoCliente);
-    } catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-});
-
-app.get('/clientes/:id', authMiddleware, async (req, res) => {
-    try {
-        const cliente = await clienteService.buscarClientePorId(req.params.id);
-        if (!cliente) {
-            return res.status(404).send({ message: 'Cliente não encontrado.' });
+        const snapshot = await usuariosCollection.where("email", "==", email).get()
+        if (!snapshot.empty) {
+            return res.status(400).json({ message: "Email já cadastrado" })
         }
-        res.status(200).send(cliente);
-    } catch (error) {
-        res.status(500).send({ message: error.message });
-    }
-});
 
-// Rotas de Funcionário
-app.post('/funcionarios', authMiddleware, async (req, res) => {
-    try {
-        const { nome, email, cargo } = req.body;
-        const novoFuncionario = await funcionarioService.criarFuncionario(nome, email, cargo);
-        res.status(201).send(novoFuncionario);
-    } catch (error) {
-        res.status(400).send({ message: error.message });
+        const senhaHash = await bcrypt.hash(senha, 10)
+        const novoUsuario = await usuariosCollection.add({ nome, email, senha: senhaHash})
+        res.status(201).json({ message: "Usuário cadastrado com sucesso", id: novoUsuario.id })
     }
-});
+    catch (error) {
+        console.error("Erro de cadastro.", error)
+        res.status(500).json({ error: error.message })
+    }
+})
 
-app.get('/funcionarios/:id', authMiddleware, async (req, res) => {
+// login
+app.post("/login", async (req, res) => {
+    const { email, senha } = req.body
+
     try {
-        const funcionario = await funcionarioService.buscarFuncionarioPorId(req.params.id);
-        if (!funcionario) {
-            return res.status(404).send({ message: 'Funcionário não encontrado.' });
+        const snapshot = await usuariosCollection.where("email", "==", email).get()
+
+        if (snapshot.empty) {
+            return res.status(401).json({ message: "Email ou senha inválidos." })
         }
-        res.status(200).send(funcionario);
-    } catch (error) {
-        res.status(500).send({ message: error.message });
-    }
-});
 
-// Rotas de Gerente
-app.post('/gerentes', authMiddleware, async (req, res) => {
-    try {
-        const { nome, email, departamento } = req.body;
-        const novoGerente = await gerenteService.criarGerente(nome, email, departamento);
-        res.status(201).send(novoGerente);
-    } catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-});
+        const doc = snapshot.docs[0]
+        const userData = doc.data()
 
-app.get('/gerentes/:id', authMiddleware, async (req, res) => {
-    try {
-        const gerente = await gerenteService.buscarGerentePorId(req.params.id);
-        if (!gerente) {
-            return res.status(404).send({ message: 'Gerente não encontrado.' });
+        const senhaCorreta = await bcrypt.compare(senha, userData.senha)
+        if (!senhaCorreta) {
+            return res.status(401).json({ message: "Email ou senha inválidos." })
         }
-        res.status(200).send(gerente);
+
+        const token = jwt.sign({ id: doc.id, email: userData.email }, "vC+dtfWWK@j?tn5CUo-t#,A,7Ufq48h9m2%Ece}}!Jh-d9.+VV4s8t)Y7MiY5?*,", { expiresIn: "1h" })
+
+        res.json({ message: "Login bem-sucedido", token })
+
     } catch (error) {
-        res.status(500).send({ message: error.message });
+        console.error("Erro no login:", error)
+        res.status(500).json({ error: error.message })
     }
+})
+
+// rota protegida
+app.get("/me", autenticarToken, (req, res) => {
+    res.json({ id: req.user.id, email: req.user.email })
+})
+
+// middleware para verificar token
+function autenticarToken(req, res, next) {
+    const token = req.headers.authorization?.split(" ")[1]
+    if (!token) return res.status(401).json({ message: "Token não fornecido" })
+    
+    jwt.verify(token, "vC+dtfWWK@j?tn5CUo-t#,A,7Ufq48h9m2%Ece}}!Jh-d9.+VV4s8t)Y7MiY5?*,", (err, user) => {
+        if (err) return res.status(403).json({ message: "Token inválido" })
+        req.user = user
+        next()
+    })
+}
+
+// Rota da página inicial: redireciona para a página de login
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../frontend/login.html"))
 });
 
-// Rotas de Produto
-app.post('/produtos', authMiddleware, async (req, res) => {
-    try {
-        const { nome, descricao, preco, categoria } = req.body;
-        const novoProduto = await produtoService.criarProduto(nome, descricao, preco, categoria);
-        res.status(201).send(novoProduto);
-    } catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-});
-
-app.get('/produtos/:id', authMiddleware, async (req, res) => {
-    try {
-        const produto = await produtoService.buscarProdutoPorId(req.params.id);
-        if (!produto) {
-            return res.status(404).send({ message: 'Produto não encontrado.' });
-        }
-        res.status(200).send(produto);
-    } catch (error) {
-        res.status(500).send({ message: error.message });
-    }
-});
-
-// Rotas de Pedido
-app.post('/pedidos', authMiddleware, async (req, res) => {
-    try {
-        const { clienteId, produtos } = req.body;
-        const novoPedido = await pedidoService.criarPedido(clienteId, produtos);
-        res.status(201).send(novoPedido);
-    } catch (error) {
-        res.status(400).send({ message: error.message });
-    }
-});
-
-app.get('/pedidos/:id', authMiddleware, async (req, res) => {
-    try {
-        const pedido = await pedidoService.buscarPedidoPorId(req.params.id);
-        if (!pedido) {
-            return res.status(404).send({ message: 'Pedido não encontrado.' });
-        }
-        res.status(200).send(pedido);
-    } catch (error) {
-        res.status(500).send({ message: error.message });
-    }
-});
-
-// Iniciar o servidor
-const PORT = process.env.PORT || 3000;
+// inicializar servidor
+const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
+    console.log(`Servidor rodando na porta ${PORT}`)
+})
