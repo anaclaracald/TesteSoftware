@@ -1,4 +1,6 @@
 const ClienteService = require("../services/ClienteService");
+jest.mock('firebase/app');
+jest.mock('firebase/firestore');
 
 describe('ClienteService', () => {
     let service;

@@ -1,18 +1,20 @@
 {
-  "name": "e2e-tests",
+  "name": "testesoftware",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:backend": "npm --prefix backend start",
+    "test:e2e": "mocha e2e-tests/userFlow.test.js --require ./e2e-tests/node_modules/chai --timeout 60000"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "chai": "^5.2.0",
-    "chromedriver": "^137.0.4",
-    "mocha": "^11.7.0",
-    "selenium-webdriver": "^4.33.0"
+  "dependencies": {
+    "selenium-webdriver": "^4.22.0",
+    "chromedriver": "^126.0.1",
+    "mocha": "^10.4.0",
+    "chai": "^4.3.10"
   }
 }

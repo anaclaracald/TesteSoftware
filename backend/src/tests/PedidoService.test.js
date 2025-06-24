@@ -1,6 +1,8 @@
 const PedidoService = require("../services/PedidoService")
 const Pedido = require("../models/Pedido")
 const StatusPedido = require("../enums/statusPedido")
+jest.mock('firebase/app');
+jest.mock('firebase/firestore');
 
 jest.mock("../models/Pedido")
 

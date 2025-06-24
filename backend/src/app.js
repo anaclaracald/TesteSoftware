@@ -2,11 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-// Importe o banco de dados e autenticação do Firebase configurados centralmente
 const { db, auth } = require('./config/firebase');
-
-// Importe a classe Usuario diretamente do modelo
-const Usuario = require('./models/Usuario'); // Caminho corrigido
+const Usuario = require('./models/Usuario'); 
 
 const clienteService = require('./services/ClienteService');
 const funcionarioService = require('./services/FuncionarioService');
@@ -30,7 +27,6 @@ app.use(cors({
 app.post('/usuarios', async (req, res) => {
     try {
         const { nome, email, senha } = req.body;
-        // Use Usuario.criar em vez de usuarioService.criarUsuario
         const novoUsuario = await Usuario.criar(nome, email, senha); 
         res.status(201).send(novoUsuario);
     } catch (error) {
@@ -41,7 +37,6 @@ app.post('/usuarios', async (req, res) => {
 app.post('/login', async (req, res) => {
     try {
         const { email, senha } = req.body;
-        // Use Usuario.login em vez de usuarioService.login
         const { token, usuario } = await Usuario.login(email, senha);
         res.status(200).send({ token, usuario });
     } catch (error) {
@@ -52,8 +47,6 @@ app.post('/login', async (req, res) => {
 // Rotas Protegidas (Exigem Autenticação)
 app.get('/me', authMiddleware, async (req, res) => {
     try {
-        // O usuário autenticado está disponível em req.usuario
-        // Você pode retornar informações adicionais do usuário se necessário
         res.status(200).send({ id: req.usuario.id, email: req.usuario.email, tipo: req.usuario.tipo });
     } catch (error) {
         res.status(500).send({ message: 'Erro ao obter dados do usuário autenticado.' });

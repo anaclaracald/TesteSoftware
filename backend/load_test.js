@@ -3,7 +3,6 @@ import { check, sleep } from 'k6';
 
 // Define as opções do teste de carga
 export let options = {
-    // Definindo estágios para simular diferentes cargas
     stages: [
         { duration: '30s', target: 10 },  // Rampa para 10 usuários em 30 segundos
         { duration: '1m', target: 50 },   // Mantém 50 usuários por 1 minuto
@@ -19,10 +18,9 @@ export let options = {
 
 // Função principal que cada usuário virtual (VU) irá executar
 export default function () {
-    const baseUrl = 'http://localhost:3000'; // URL base do seu backend Node.js
+    const baseUrl = 'http://localhost:3000'; 
 
     // --- Cenário de Cadastro de Usuário (POST /usuarios) ---
-    // Gerar dados únicos para cada usuário virtual e iteração
     const uniqueId = `${__VU}-${__ITER}-${Date.now()}`;
     const nome = `UsuarioTeste_${uniqueId}`;
     const email = `email_teste_${uniqueId}@example.com`;
@@ -34,7 +32,7 @@ export default function () {
         senha: senha,
     });
 
-    console.log(`[VU:${__VU}] Tentando cadastrar: ${email}`); // Para depuração
+    console.log(`[VU:${__VU}] Tentando cadastrar: ${email}`); 
 
     let registerRes = http.post(`${baseUrl}/usuarios`, registerPayload, {
         headers: { 'Content-Type': 'application/json' },
@@ -45,10 +43,8 @@ export default function () {
         'Cadastro: resposta contém ID do usuário (se 201)': (r) => r.status === 201 ? r.json() && r.json().id !== '' : true,
     });
 
-    // Se o cadastro falhou porque o email já existe, podemos tentar fazer login com ele
-    // ou simplesmente seguir para o login para não falhar o fluxo completo
-    // Para simplificar, vamos tentar login com o mesmo email/senha
-    sleep(0.5); // Pequena pausa
+
+    sleep(0.5); 
 
     // --- Cenário de Login (POST /login) ---
     const loginPayload = JSON.stringify({
@@ -56,7 +52,7 @@ export default function () {
         senha: senha,
     });
 
-    console.log(`[VU:${__VU}] Tentando login com: ${email}`); // Para depuração
+    console.log(`[VU:${__VU}] Tentando login com: ${email}`); 
 
     let loginRes = http.post(`${baseUrl}/login`, loginPayload, {
         headers: { 'Content-Type': 'application/json' },
@@ -70,16 +66,16 @@ export default function () {
     let authToken = '';
     if (loginRes.status === 200 && loginRes.json() && loginRes.json().token) {
         authToken = loginRes.json().token;
-        console.log(`[VU:${__VU}] Login bem-sucedido. Token obtido.`); // Para depuração
+        console.log(`[VU:${__VU}] Login bem-sucedido. Token obtido.`); 
     } else {
         console.error(`[VU:${__VU}] Falha no login ou token não encontrado: Status ${loginRes.status}, Body: ${loginRes.body}`); // Para depuração
     }
 
-    sleep(0.5); // Pequena pausa
+    sleep(0.5); 
 
     // --- Cenário de Acesso à Rota Protegida (GET /me) ---
-    if (authToken) { // Só tenta acessar se o token foi obtido
-        console.log(`[VU:${__VU}] Acessando rota protegida /me`); // Para depuração
+    if (authToken) { 
+        console.log(`[VU:${__VU}] Acessando rota protegida /me`); 
         let meRes = http.get(`${baseUrl}/me`, {
             headers: {
                 'Authorization': `Bearer ${authToken}`,
@@ -99,5 +95,5 @@ export default function () {
         console.log(`[VU:${__VU}] Pulando acesso à rota protegida pois o token não foi obtido.`);
     }
 
-    sleep(1); // Pausa maior entre as iterações do fluxo completo
+    sleep(1); 
 }

@@ -1,4 +1,6 @@
 const GerenteService = require("../services/GerenteService");
+jest.mock('firebase/app');
+jest.mock('firebase/firestore');
 
 describe("GerenteService", () => {
     let service;

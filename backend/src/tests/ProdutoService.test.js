@@ -1,5 +1,7 @@
 const ProdutoService = require("../services/ProdutoService")
 const Produto = require("../models/Produto")
+jest.mock('firebase/app');
+jest.mock('firebase/firestore');
 
 jest.mock("../models/Produto")
 
