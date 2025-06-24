@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>McDonald's - Carrinho</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="icon" href="IMG/favicon2.ico" type="image/x-icon"/>
+</head>
+<body>
+  <div class="carrinho-container">
+    <header class="cabecalho">
+      <a href="index.html" class="voltar">
+        <img src="IMG/voltar.png" alt="Voltar" class="icone-voltar" /> VOLTAR
+      </a>
+      <h1>Meu Carrinho</h1>
+    </header>
+
+    <form class="formulario-mesa">
+      <label for="numeroMesa"><span>*</span> Número da sua mesa</label>
+      <input type="text" id="numeroMesa" required placeholder="" min="1" max="15" />
+      <p class="info">Está informado nos cantos da mesa ou porta guardanapos</p>
+    </form>
+
+    <div class="produtos">
+      <!-- Produtos serão carregados aqui dinamicamente -->
+    </div>
+
+    <div class="total">
+      <span>Total</span>
+      <span>R$ 0,00</span>
+    </div>
+
+    <button class="btn-proximo">Próximo</button>
+  </div>
+
+  <!-- SCRIPT DE CARREGAMENTO DO CARRINHO -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    const container = document.querySelector(".produtos");
+    const totalSpan = document.querySelector(".total span:last-child");
+
+    function renderCarrinho() {
+      container.innerHTML = "";
+      let totalGeral = 0;
+
+      carrinho.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("item");
+
+        const precoUnitario = parseFloat(item.total) / item.qtd;
+
+        div.innerHTML = `
+          <div class="imagem">
+            <img src="${item.imagem}" alt="${item.nome}" />
+          </div>
+          <div class="detalhes">
+            <p class="nome">${item.nome}</p>
+            <div class="quantidade">
+              <button class="btn-menor" data-index="${index}">–</button>
+              <span>${item.qtd}</span>
+              <button class="btn-maior" data-index="${index}">+</button>
+            </div>
+            <p class="preco">R$ ${(precoUnitario * item.qtd).toFixed(2).replace('.', ',')}</p>
+          </div>
+        `;
+
+        container.appendChild(div);
+        totalGeral += precoUnitario * item.qtd;
+      });
+
+      totalSpan.innerText = `R$ ${totalGeral.toFixed(2).replace('.', ',')}`;
+      adicionarEventos();
+    }
+
+    function adicionarEventos() {
+      // Aumentar quantidade
+      document.querySelectorAll(".btn-maior").forEach(btn => {
+        btn.addEventListener("click", function () {
+          const index = this.getAttribute("data-index");
+          const precoUnitario = parseFloat(carrinho[index].total) / carrinho[index].qtd;
+          carrinho[index].qtd++;
+          carrinho[index].total = (precoUnitario * carrinho[index].qtd).toFixed(2);
+          localStorage.setItem("carrinho", JSON.stringify(carrinho));
+          renderCarrinho();
+        });
+      });
+
+      // Diminuir quantidade ou remover item
+      document.querySelectorAll(".btn-menor").forEach(btn => {
+        btn.addEventListener("click", function () {
+          const index = this.getAttribute("data-index");
+          const precoUnitario = parseFloat(carrinho[index].total) / carrinho[index].qtd;
+
+          if (carrinho[index].qtd > 1) {
+            carrinho[index].qtd--;
+            carrinho[index].total = (precoUnitario * carrinho[index].qtd).toFixed(2);
+          } else {
+            carrinho.splice(index, 1); // remove o item se quantidade for 1
+          }
+
+          localStorage.setItem("carrinho", JSON.stringify(carrinho));
+          renderCarrinho();
+        });
+      });
+    }
+
+    renderCarrinho();
+  });
+</script>
+
+  <script src="Js/script.js"></script>
+</body>
+</html>

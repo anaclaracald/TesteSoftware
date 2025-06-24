@@ -1,0 +1,641 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  width: 100%;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+/*CABEÇALHO*/
+
+.header {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 20px 20px 0 0;
+  margin-top: -4px;
+}
+
+.logo {
+  width: 60px;
+  margin-right: 15px;
+  border-radius: 5px;
+}
+
+.info h1 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.aberto {
+  color: green;
+}
+
+.fechado {
+  color: red;
+  font-weight: bold;
+}
+
+/* CÓDIGO CATEGORIAS - MENU*/
+
+.categoria-section {
+  scroll-margin-top: 100px;
+}
+
+.menu {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-around;
+  background: #eee;
+  padding: 12px 10px;
+  font-size: 13px;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  overflow-x: auto;
+  border-bottom: 1px solid #ccc;
+}
+
+
+.menu a {
+  text-decoration: none;
+  padding: 10px 15px;
+  font-weight: 600;
+  color: #333;
+  border-radius: 10px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.menu a:hover {
+  background-color: #ddd;
+}
+/*CÓDIGO PRODUTOS*/
+
+h2 {
+  font-size: 15px;
+  margin: 15px 0 10px;
+}
+.produtos {
+  padding: 5px;
+  padding-bottom: 60px;
+}
+.produto {
+  display: flex;
+  align-items: flex-start;
+  background: white;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  position: relative;
+}
+
+.produto img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.descricao {
+  margin-left: 10px;
+  flex: 1;
+}
+
+.descricao h3 {
+  font-size: 13px;
+  margin: 0 0 4px;
+}
+
+.descricao p {
+  font-size: 11px;
+  margin: 0 0 5px;
+}
+
+.preco {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+/*MODAL PAGINA MENU*/
+.modal-produto {
+  position: fixed;
+  left: 0;
+  bottom: -100%;
+  width: 100%;
+  background: #fff;
+  transition: bottom 0.4s ease;
+  z-index: 1000;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+}
+
+.modal-produto.ativo {
+  bottom: 0;
+}
+
+.conteudo-modal {
+  padding: 20px;
+}
+
+.fechar {
+  font-size: 24px;
+  float: right;
+  cursor: pointer;
+}
+
+.cabecalho-modal {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.img-produto {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.info-produto h2 {
+  margin: 0;
+}
+
+.quantidade {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.quantidade button {
+  background-color: #000000;
+  color: #fff;
+  border: none;
+  padding: 4px 10px;
+  font-size: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.quantidade span {
+  min-width: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+.rodape-modal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.rodape-modal button {
+  background-color: red;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.mensagem-adicionado {
+  position: fixed;
+  top: 20px; /* ⬅️ Muda aqui */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  white-space: nowrap; /* ⬅️ Impede quebra de linha */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 999;
+}
+
+.mensagem-adicionado.mostrar {
+  opacity: 1;
+  visibility: visible;
+}
+
+/*CÓDIGO PÁGINA DE RESERVA*/
+
+.reserva-container {
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 100px;
+}
+
+.reserva-container h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 24px;
+}
+
+.reserva-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.reserva-form label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 5px;
+}
+.reserva-form label span {
+  color: red;
+}
+
+.reserva-form input {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-avancar {
+  margin-top: 30px;
+  padding: 14px;
+  font-size: 16px;
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* CÓDIGO PÁGINA SOBRE A RESERVA */
+
+.btn-criar-reserva {
+  margin-top: 50px;
+  padding: 14px;
+  font-size: 16px;
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* CÓDIGO PÁGINA SUA RESERVA */
+
+.sua-reserva-info {
+  background-color: #f8f8f8;
+  padding: 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #000;
+}
+
+.sua-reserva-info p {
+  margin-bottom: 15px;
+}
+
+/*CANCELAR RESERVA*/
+
+.cancelar-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 20px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cancelar-btn:hover {
+  background-color: #c9302c;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-conteudo {
+  background-color: #fff;
+  margin: 20% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.modal-botoes button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.modal-botoes button:first-child {
+  background-color: #d9534f;
+  color: white;
+}
+
+.modal-botoes button:last-child {
+  background-color: #5bc0de;
+  color: white;
+}
+
+/*CÓDIGO PERFIL*/
+.tela-login {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 350px;
+  width: 90%;
+  text-align: center;
+}
+
+.logo-login {
+  width: 120px;
+  margin-bottom: 30px;
+}
+
+.login-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-grupo {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #000;
+  padding: 8px 0;
+}
+
+.input-grupo .icone {
+  margin-right: 10px;
+}
+
+.input-grupo .icone img {
+  width: 18px;   
+  height: 18px;
+  object-fit: contain;
+}
+
+
+.input-grupo input {
+  border: none;
+  outline: none;
+  flex: 1;
+  font-size: 16px;
+  background: none;
+}
+
+.esqueceu-senha {
+  text-align: right;
+  font-size: 14px;
+  color: #555;
+  text-decoration: underline;
+  margin-top: -10px;
+}
+
+.btn-login {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.criar-conta {
+  font-size: 14px;
+}
+
+.criar-conta a {
+  color: #000;
+  text-decoration: underline;
+}
+
+/*CÓDIGO CARRINHO*/
+* {
+  box-sizing: border-box;
+}
+
+.carrinho-container {
+  padding: 20px;
+  padding-bottom: 100px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cabecalho {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.voltar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: #000;
+  text-decoration: none;
+}
+
+.icone-voltar {
+  width: 16px;
+  height: 16px;
+}
+
+.cabecalho h1 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.formulario-mesa label {
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.formulario-mesa label span {
+  color: red;
+}
+
+.formulario-mesa input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.formulario-mesa .info {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.produtos {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.item .imagem {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.item .imagem img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.item .detalhes {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.detalhes {
+  flex: 1;
+}
+
+.detalhes .nome {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0 0 6px;
+  margin-bottom: 25px;
+}
+
+.detalhes .preco {
+  font-size: 14px;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.total {
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  font-weight: bold;
+  border-top: 1px solid #ccc;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.1);
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  z-index: 10;
+}
+
+.btn-proximo {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  padding: 0 18px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #d61a1a;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+}
+
+
+/*CODIGO FOOTER*/
+.footer {
+  display: flex;
+  justify-content: space-around;
+  background: #242424;
+  padding: 12px 0 8px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer a {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+  font-size: 10px;
+}
+
+.footer a.active-footer::before {
+  content: "";
+  position: absolute;
+  width: 52px;
+  height: 52px;
+  background-color: #565656;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.footer img {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 3px;
+}
+

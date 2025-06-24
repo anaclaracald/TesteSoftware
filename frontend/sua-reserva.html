@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>McDonald's - Sua Reserva</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="IMG/favicon2.ico" type="image/x-icon">
+</head>
+<body>
+
+  <main class="reserva-container">
+    <h1>Sua Reserva</h1>
+
+    <div class="sua-reserva-info">
+      <p><strong>Pessoas:</strong> <span id="res-pessoas">--</span></p>
+      <p><strong>Data:</strong> <span id="res-data">--</span></p>
+      <p><strong>Horário:</strong> <span id="res-hora">--</span></p>
+    </div>
+    
+    <button class="cancelar-btn" onclick="mostrarConfirmacao()">Cancelar Reserva</button>
+
+<div id="confirmacao-cancelamento" class="modal">
+  <div class="modal-conteudo">
+    <p>Deseja cancelar sua reserva?</p>
+    <div class="modal-botoes">
+      <button onclick="cancelarReserva()">Sim</button>
+      <button onclick="fecharModal()">Não</button>
+    </div>
+  </div>
+</div>
+
+  </main>
+
+  <footer class="footer">
+    <a href="index.html" class="menu-btn">
+        <img src="IMG/icons8-menu-quadrado-2-100.png" alt="">
+        <span>MENU</span>
+    </a>
+    <a href="reserva.html" class="reserva-btn">
+        <img src="IMG/icons8-reserva-50.png" alt="">
+        <span>RESERVA</span>
+    </a>
+    <a href="carrinho.html" class="carrinho-btn">
+        <img src="IMG/icons8-carrinho-de-compras-24.png" alt="">
+        <span>CARRINHO</span>
+    </a>
+    <a href="perfil.html" class="perfil-btn">
+        <img src="IMG/icons8-usuário-50.png" alt="">
+        <span>PERFIL</span>
+    </a>
+</footer>
+
+  <script src="Js/script.js"></script>
+</body>
+</html>

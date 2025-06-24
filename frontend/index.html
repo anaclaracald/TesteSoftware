@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McDonald's - Menu</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="IMG/favicon2.ico" type="image/x-icon">
+</head>
+<body>
+    <header class="header">
+        <img src="IMG/logo_vermelha.jpg" alt="McDonald's" class="logo">
+        <div class="info">
+            <h1>McDonald's</h1>
+            <p class="status">HORÁRIO DE ATENDIMENTO - <span id="status-horario"></span> - Brasília - DF</p>
+        </div>
+    </header>
+    
+    <nav class="menu">
+        <a href="#lancamentos">LANÇAMENTOS</a>
+        <a href="#mequi-box">MÉQUI BOX</a>
+        <a href="#familiatasty">FAMÍLIA TASTY</a>
+        <a href="#batata">BATATA FRITA</a>
+        <a href="#refrigerante">REFRIGERANTE</a>
+
+    </nav>
+    
+        <section class="produtos">
+            <h2 id="lancamentos" class="categoria-section">LANÇAMENTOS</h2>
+        <div class="produto" onclick="abrirModal('McFish', 'O querido está de volta, composto por um pão regular, molho emulsionado tártaro, uma fatia de queijo sabor cheddar e um filé de peixe polaca empanado.', 'IMG/lancamentos/original.png', 30.00)">
+            <img src="IMG/lancamentos/original.png" alt="McFish">
+            <div class="descricao">
+                <h3>McFish</h3>
+                <p>O querido está de volta, composto por um pão regular, molho emulsionado tártaro, uma fatia de queijo sabor cheddar e um filé de peixe polaca empanado.</p>
+                <span class="preco">R$ 30,00</span>
+            </div>
+        </div>
+        
+        <div class="produto" onclick="abrirModal('Duplo McFish', 'Duplamente especial, é composto por pão regular, molho emulsionado tártaro, uma fatia de queijo sabor cheddar e dois filés de peixe polaca empanados', 'IMG/lancamentos/mcfishduplo.png', 40.00)">
+            <img src="IMG/lancamentos/mcfishduplo.png" alt="Duplo McFish">
+            <div class="descricao">
+                <h3>Duplo McFish</h3>
+                <p>Duplamente especial, é composto por pão regular, molho emulsionado tártaro, uma fatia de queijo sabor cheddar e dois filés de peixe polaca empanados</p>
+                <span class="preco">R$ 40,00</span>
+            </div>
+        </div>
+        
+        <div class="produto" onclick="abrirModal('Batata Rústica', 'Batata rústica agora acompanhada de molho emulsionado tártaro. Não dá para resistir, experimente!', 'IMG/lancamentos/batata-rustica.png', 18.00)">
+            <img src="IMG/lancamentos/batata-rustica.png" alt="Batata Rústica">
+            <div class="descricao">
+                <h3>Batata Rústica</h3>
+                <p>Batata rústica agora acompanhada de molho emulsionado tártaro. Não dá para resistir, experimente!</p>
+                <span class="preco">R$ 18,00</span>
+            </div>
+        </div>
+        
+        <div class="produto" onclick="abrirModal('McFlurry KitKat Chocolate com Coco Chocolate', 'Sobremesa composta por bebida láctea sabor baunilha, cobertura sabor chocolate e chocolate KitKat sabor chocolate com coco', 'IMG/lancamentos/mcflurry.png', 21.00)">
+            <img src="IMG/lancamentos/mcflurry.png" alt="McFlurry">
+            <div class="descricao">
+                <h3>McFlurry KitKat Chocolate com Coco Chocolate</h3>
+                <p>Sobremesa composta por bebida láctea sabor baunilha, cobertura sabor chocolate e chocolate KitKat sabor chocolate com coco</p>
+                <span class="preco">R$ 21,00</span>
+            </div>
+        </div>
+        
+        <div class="produto" onclick="abrirModal('McColosso KitKat Chocolate com Coco Chocolate', 'Sobremesa feita com um supercascão, recheada de bebida láctea sabor baunilha, cobertura sabor chocolate e um finger de KitKat sabor chocolate com coco', 'IMG/lancamentos/mccolosso.png', 10.00)">
+            <img src="IMG/lancamentos/mccolosso.png" alt="McColosso">
+            <div class="descricao">
+                <h3>McColosso KitKat Chocolate com Coco Chocolate</h3>
+                <p>Sobremesa feita com um supercascão, recheada de bebida láctea sabor baunilha, cobertura sabor chocolate e um finger de KitKat sabor chocolate com coco</p>
+                <span class="preco">R$ 10,00</span>
+            </div>
+        </div>
+        
+
+        <h2 id="mequi-box" class="categoria-section">MÉQUI BOX</h2>
+
+        <div class="produto" onclick="abrirModal('Family Box para 2', 'Composto por 01 McLanche Feliz e 01 McOferta média Big Mac, Quarterão, Cheddar McMelt ou McChicken Bacon', 'IMG/lancamentos/familybox2.png', 64.90)">
+            <img src="IMG/lancamentos/familybox2.png" alt="Family Box para 2">
+            <div class="descricao">
+                <h3>Family Box para 2</h3>
+                <p>Composto por 01 McLanche Feliz e 01 McOferta média Big Mac, Quarterão, Cheddar McMelt ou McChicken Bacon</p>
+                <span class="preco">R$ 64,90</span>
+            </div>
+        </div>
+        
+        <div class="produto" onclick="abrirModal('Family Box para 3', 'Composto por 01 McLanche Feliz e 02 McOfertas médias Big Mac, Quarterão, Cheddar McMelt ou McChicken Bacon', 'IMG/lancamentos/familybox3.png', 79.90)">
+            <img src="IMG/lancamentos/familybox3.png" alt="Family Box para 3">
+            <div class="descricao">
+                <h3>Family Box para 3</h3>
+                <p>Composto por 01 McLanche Feliz e 02 McOfertas médias Big Mac, Quarterão, Cheddar McMelt ou McChicken Bacon</p>
+                <span class="preco">R$ 79,90</span>
+            </div>
+        </div>
+        
+        <div class="produto" onclick="abrirModal('Méqui Box Clássico para 4', 'Composto por 04 McOfertas médias: Big Mac, Quarterão, Cheddar McMelt ou McChicken Bacon', 'IMG/lancamentos/mequibox4.png', 99.90)">
+            <img src="IMG/lancamentos/mequibox4.png" alt="Méqui Box Clássico para 4">
+            <div class="descricao">
+                <h3>Méqui Box Clássico para 4</h3>
+                <p>Méqui Box Clássico para 4 Composto por 04 McOfertas médias: Big Mac, Quarterão, Cheddar McMelt ou McChicken Bacon</p>
+                <span class="preco">R$ 99,90</span>
+            </div>
+        </div>
+        
+        <div class="produto" onclick="abrirModal('Méqui Box Clássico para 3', 'Composto por 03 McOfertas médias: Big Mac, Quarterão, Cheddar McMelt ou McChicken Bacon', 'IMG/lancamentos/mequibox3.png', 84.90)">
+            <img src="IMG/lancamentos/mequibox3.png" alt="Méqui Box Clássico para 3">
+            <div class="descricao">
+                <h3>Méqui Box Clássico para 3</h3>
+                <p>Méqui Box Clássico para 3 Composto por 03 McOfertas médias: Big Mac, Quarterão, Cheddar McMelt ou McChicken Bacon</p>
+                <span class="preco">R$ 84,90</span>
+            </div>
+        </div>
+        
+
+        <h2 id="familiatasty" class="categoria-section">FAMÍLIA TASTY</h2>
+        <div class="produto" onclick="abrirModal('Tasty Turbo 1 carne', 'Composto por um hambúrguer de carne 100% bovina, o icônico molho tasty, queijo processado sabor emental, tomate, alface, cebola, tudo isso no pão com gergelim.', 'IMG/lancamentos/tastyturbo1carne.png', 52.90)">
+            <img src="IMG/lancamentos/tastyturbo1carne.png" alt="Tasty Turbo 1 carne">
+            <div class="descricao">
+                <h3>Tasty Turbo 1 carne</h3>
+                <p>Composto por um hambúrguer de carne 100% bovina, o icônico molho tasty, queijo processado sabor emental, tomate, alface, cebola, tudo isso no pão com gergelim.</p>
+                <span class="preco">R$ 52,90</span>
+            </div>
+        </div>
+        
+        <div class="produto" onclick="abrirModal('Tasty Turbo 2 carnes', 'Os novos sanduíches contêm dois hambúrgueres de carne 100% bovina. Composto pelo icônico molho tasty, queijo processado sabor emental, tomate, alface, cebola, tudo isso no pão com gergelim.', 'IMG/lancamentos/tastyturbo2carne.png', 59.90)">
+            <img src="IMG/lancamentos/tastyturbo2carne.png" alt="Tasty Turbo 2 carnes">
+            <div class="descricao">
+                <h3>Tasty Turbo 2 carnes</h3>
+                <p>Os novos sanduíches contêm dois hambúrgueres de carne 100% bovina. Composto pelo icônico molho tasty, queijo processado sabor emental, tomate, alface, cebola, tudo isso no pão com gergelim.</p>
+                <span class="preco">R$ 59,90</span>
+            </div>
+        </div>
+        
+        <div class="produto" onclick="abrirModal('Tasty Turbo 3 carnes', 'Composto por três hambúrgueres de carne 100% bovina, o icônico molho tasty, queijo processado sabor emental, tomate, alface, cebola, tudo isso no pão com gergelim.', 'IMG/lancamentos/tastyturbo3carnes.png', 67.90)">
+            <img src="IMG/lancamentos/tastyturbo3carnes.png" alt="Tasty Turbo 3 carnes">
+            <div class="descricao">
+                <h3>Tasty Turbo 3 carnes</h3>
+                <p>Composto por três hambúrgueres de carne 100% bovina, o icônico molho tasty, queijo processado sabor emental, tomate, alface, cebola, tudo isso no pão com gergelim.</p>
+                <span class="preco">R$ 67,90</span>
+            </div>
+        </div>
+        
+        <div class="produto" onclick="abrirModal('Tasty Turbo Queijo', 'Os novos sanduíches contêm dois hambúrgueres de carne 100% bovina. Composto pelo icônico molho tasty, 2 fatias de queijo processado sabor emental, 2 fatias de queijo processado sabor cheddar, molho com queijo mussarela, tomate, alface americana, cebola, tudo isso no pão com gergelim.', 'IMG/lancamentos/tastyturboqueijo.png', 65.90)">
+            <img src="IMG/lancamentos/tastyturboqueijo.png" alt="Tasty Turbo Queijo">
+            <div class="descricao">
+                <h3>Tasty Turbo Queijo</h3>
+                <p>Os novos sanduíches contêm dois hambúrgueres de carne 100% bovina. Composto pelo icônico molho tasty, 2 fatias de queijo processado sabor emental, 2 fatias de queijo processado sabor cheddar, molho com queijo mussarela, tomate, alface americana, cebola, tudo isso no pão com gergelim.</p>
+                <span class="preco">R$ 65,90</span>
+            </div>
+        </div>
+        
+
+        <h2 id="batata" class="categoria-section">BATATA FRITA</h2>
+        
+        <h2 id="refrigerante" class="categoria-section">REFRIGERANTE</h2>
+        
+    </section>
+    
+    <footer class="footer">
+        <a href="index.html" class="menu-btn">
+            <img src="IMG/icons8-menu-quadrado-2-100.png" alt="">
+            <span>MENU</span>
+        </a>
+        <a href="reserva.html" class="reserva-btn">
+            <img src="IMG/icons8-reserva-50.png" alt="">
+            <span>RESERVA</span>
+        </a>
+        <a href="carrinho.html" class="carrinho-btn">
+            <img src="IMG/icons8-carrinho-de-compras-24.png" alt="">
+            <span>CARRINHO</span>
+        </a>
+        <a href="perfil.html" class="perfil-btn">
+            <img src="IMG/icons8-usuário-50.png" alt="">
+            <span>PERFIL</span>
+        </a>
+    </footer>
+
+    <div id="modalProduto" class="modal-produto">
+        <div class="conteudo-modal">
+            <span class="fechar" onclick="fecharModal()">&times;</span>
+            <div class="cabecalho-modal">
+                <img src="IMG/lancamentos/original.png" alt="Produto" class="img-produto">
+                <div class="info-produto">
+                    <h2 id="modalNome">NOME</h2>
+                    <span id="modalPreco">R$ 00,00</span>
+                </div>
+            </div>
+            <p id="modalDescricao">Descrição do produto</p>
+            <div class="quantidade">
+                <span>Quantidade</span>
+                <button onclick="alterarQtd(-1)">-</button>
+                <span id="qtd">1</span>
+                <button onclick="alterarQtd(1)">+</button>
+            </div>
+            <!-- <div class="adicionais">
+                <span>Adicionais</span>
+                <div class="opcoes">
+                    SE QUISEREM COLOCAR ADICIONAIS
+                </div>
+            </div>-->
+            <div class="rodape-modal">
+                <span>Total: <strong id="modalTotal">R$ 00,00</strong></span>
+                <button onclick="adicionarAoCarrinho()">ADICIONAR AO CARRINHO</button>
+                <div id="mensagemAdicionado" class="mensagem-adicionado">Adicionado ao carrinho!</div>
+            </div>
+        </div>
+    </div>
+<script src="Js/script.js"></script>
+<script src="Js/pagina_protegida.js"></script>
+</body>
+</html>
